@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicker Game</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        h1 { color: #333; }
+        button { font-size: 20px; padding: 10px 20px; margin: 10px; cursor: pointer; }
+        #points { font-size: 24px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>Clicker Game</h1>
+    <p id="points">Points: 0</p>
+    <button id="clickButton">Click Me!</button>
+    <button id="buyBotButton" disabled>Buy Bot (100 points) - Adds 1 point/sec</button>
+    <p id="bots">Bots: 0</p>
+
+    <script>
+        let points = 0;  // Points counter
+        let bots = 0;    // Bots counter
+
+        // Function to update points and bot display
+        function update() {
+            document.getElementById("points").textContent = "Points: " + points;
+            document.getElementById("bots").textContent = "Bots: " + bots;
+            document.getElementById("buyBotButton").disabled = points < 100;
+        }
+
+        // Click button functionality (add 1 point)
+        document.getElementById("clickButton").onclick = function() { 
+            points++; 
+            update(); 
+        };
+
+        // Buy bot functionality (check if points are enough and subtract)
+        document.getElementById("buyBotButton").onclick = function() { 
+            if (points >= 100) {
+                points -= 100;  // Subtract 100 points for buying a bot
+                bots++;         // Add one bot
+                update();       // Update the points and bot display
+            }
+        };
+
+        // Bots clicking every second (add 1 point per bot every second)
+        setInterval(function() { 
+            points += bots;  // Add points based on number of bots
+            update();         // Update the display
+        }, 1000); // Update every second
+    </script>
+</body>
+</html>
